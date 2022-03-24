@@ -14,6 +14,10 @@
     <input type="text" name="year" id="year" value="" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
 </p>
 <p>
+    <label class="text-gray-100" for="length">Length</label>
+    <input type="number" name="length" id="length" value="" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+</p>
+<p>
     <select name="director_id" id="director_id" required>
         @foreach($artists as $artist)
         <option value="{{$artist->id}}"{{$artist->id == $movie->artist_id ? 'selected="selected"' : ''}}>

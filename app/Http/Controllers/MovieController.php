@@ -51,12 +51,16 @@ class MovieController extends Controller
     public function store(MovieRequest $request, Movie $movie)
     {
         
+        
+        $data = $request->all();
+        $data["poster"]=$request->file("poster")->getClientOriginalName();
+        Movie::create($data);
+        
         $poster = $request->file("poster");
-        $filename ="poster_" . $movie->id . '.' . $poster->guessClientExtension();
         Image::make($poster)->fit(180,240)
-                        ->save(storage_path("app/public/uploads/posters/" . $filename));
+                        ->save(storage_path("app/public/uploads/posters/" . $data["poster"]));
 
-        Movie::create($request->all());
+        
         return redirect()->route("movie.index")
                         ->with("ok", __("Movie has been saved"));
     }
