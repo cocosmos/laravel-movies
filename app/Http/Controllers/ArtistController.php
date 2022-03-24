@@ -6,6 +6,10 @@ use App\Models\Artist;
 use Illuminate\Http\Request;
 use App\Http\Requests\ArtistRequest;
 use App\Models\Country;
+use Auth;
+
+//use App\Http\Controllers\Auth;
+
 
 class ArtistController extends Controller
 
@@ -13,6 +17,8 @@ class ArtistController extends Controller
     public function __construct()
     {
         $this->middleware('ajax')->only('destroy');
+        $this->middleware('auth')->only('create');
+        $this->middleware('auth')->only('edit');
     }
     /**
      * Display a listing of the resource.
@@ -21,6 +27,7 @@ class ArtistController extends Controller
      */
     public function index()
     {
+
         return view('artists.index', ['artists'=>Artist::all()]);
     }
    
@@ -43,7 +50,10 @@ class ArtistController extends Controller
      */
     public function store(ArtistRequest $request)
     {
-        Artist::create($request->all());
+        $data = $request->all();
+        $data["user_id"]=Auth::user()->id;
+        Artist::create($data);
+        
         return redirect()->route("artist.index")
                         ->with("ok", __("Artist has been saved"));
     }

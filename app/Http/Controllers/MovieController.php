@@ -14,6 +14,9 @@ class MovieController extends Controller
     public function __construct()
     {
         $this->middleware('ajax')->only('destroy');
+        $this->middleware('auth')->only('create');
+        $this->middleware('auth')->only('edit');
+
     }
     /**
      * Display a listing of the resource.
@@ -47,10 +50,11 @@ class MovieController extends Controller
      */
     public function store(MovieRequest $request, Movie $movie)
     {
+        
         $poster = $request->file("poster");
         $filename ="poster_" . $movie->id . '.' . $poster->guessClientExtension();
         Image::make($poster)->fit(180,240)
-                        ->save(storage_path("app\public\uploads\posters\"" . $filename));
+                        ->save(storage_path("app/public/uploads/posters/" . $filename));
 
         Movie::create($request->all());
         return redirect()->route("movie.index")
@@ -76,7 +80,7 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        return view("movies.edit", ["movie" => $movie]);
+        return view("movies.edit", ["movie" => $movie, 'artists'=>Artist::all(), "countries"=> Country::all()]);
     }
 
     /**
@@ -89,6 +93,11 @@ class MovieController extends Controller
     public function update(MovieRequest $request, Movie $movie)
     {
         $movie->update($request->all());
+        $poster = $request->file("poster");
+        $filename ="poster_" . $movie->id . '.' . $poster->guessClientExtension();
+        Image::make($poster)->fit(180,240)
+                        ->save(storage_path("app/public/uploads/posters/" . $filename));
+
 
         return redirect()->route("movie.index")
                         ->with("ok", __("Movie has been updated"));

@@ -20,23 +20,28 @@
             }
         </style>
     </head>
-    <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+    <body class="antialiased min-h-screen">
+        <div class="relative flex items-top justify-center min-h-v bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                    <a href="{{ url('/movie') }}" class="text-sm text-gray-100 dark:text-gray-100">Movies</a>
+                    <a href="{{ url('/cinema') }}" class="text-sm text-gray-100 dark:text-gray-100">Cinemas</a>
+                    <a href="{{ url('/artist') }}" class="text-sm text-gray-100 dark:text-gray-100">Artists</a>
                     @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                        <a href="{{ url('/home') }}" class="text-sm text-gray-100 dark:text-gray-100 underline">Home</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-100 dark:text-gray-100 underline">Log in</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-100 dark:text-gray-100 underline">Register</a>
                         @endif
                     @endauth
                 </div>
             @endif
-            {{$slot}}
             </div>
+            <div class="relative flex items-top justify-center bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+                {{$slot}}
+                </div>
             <script>
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             

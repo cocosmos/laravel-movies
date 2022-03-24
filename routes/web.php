@@ -1,11 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\MovieController;
 
-
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,16 +20,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+Route::get("profile", "UserController@profile")->middleware("auth");
+
+
 Route::resource("artist", ArtistController::class);
 Route::resource("country", CountryController::class);
 Route::resource("movie", MovieController::class);
-
-/*
-Route::prefix("movie")->group(function(){
-    Route::get("{movie}/actors", [MovieController::class, "actors"])->name("movie.actors"); 
-    Route::post("{movie}/attach", [MovieController::class, "attach"])->name("movie.attach"); 
-    Route::delete("{movie}/detach/{artist}", [MovieController::class, "detach"])->name("movie.detach"); 
-});
-
-Route::resource("movie", "MovieController"); 
-*/

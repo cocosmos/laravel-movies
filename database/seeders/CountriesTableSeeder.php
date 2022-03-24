@@ -20,29 +20,5 @@ class CountriesTableSeeder extends Seeder
         Country::factory()
                 ->count(100)
                 ->create();
-        /* DB::table("countries")->insert([[
-            "name" => "Albanie",
-        ],
-        [
-            "name" => "Algérie",
-        ],
-        [
-            "name" => "Allemagne",
-        ],
-        [
-            "name" => "Argentine",
-        ],
-        [
-            "name" => "Autriche",
-        ],
-        [
-            "name" => "Russie",
-        ],
-        [
-            "name" => "Ukraine",
-        ],
-        [
-            "name"=>"Bahamas",
-        ]]); */
     }
 }

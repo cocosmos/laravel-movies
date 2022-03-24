@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CountriesTableSeeder::class,
             ArtistsTableSeeder::class,
             MoviesTableSeeder::class,
+            UserSeeder::class,
             
         ]);
     }

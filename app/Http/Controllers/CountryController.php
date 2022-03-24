@@ -11,6 +11,8 @@ class CountryController extends Controller
     public function __construct()
     {
         $this->middleware('ajax')->only('destroy');
+        $this->middleware('auth')->only('create');
+        $this->middleware('auth')->only('edit');
     }
     /**
      * Display a listing of the resource.
