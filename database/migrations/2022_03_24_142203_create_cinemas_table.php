@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('cinemas', function (Blueprint $table) {
             $table->id();
             $table->string("name", 20);
-            $table->string("adress", 40);
+            $table->string("address", 40);
             $table->foreignId("country_id")
                     ->nullable()
                     ->constrained("countries");

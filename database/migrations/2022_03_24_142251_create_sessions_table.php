@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->id();
-            $table->datetime("start_time");
+            $table->timestamps("start_time");
             $table->foreignId("room_id")
                     ->nullable()
                     ->constrained("rooms");

@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\CountryRequest;
+use Illuminate\Http\Response;
 
 class CountryController extends Controller
 {
@@ -17,19 +23,20 @@ class CountryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
-        return view('countries.index', ['countries' =>Country::all()]);
+
+        return view('countries.index', ['countries' =>Country::orderBy('name', 'ASC')->get()]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(): View|Factory|Application
     {
         return view("countries.create");
     }
@@ -37,21 +44,21 @@ class CountryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CountryRequest $request
+     * @return RedirectResponse
      */
-    public function store(CountryRequest $request)
+    public function store(CountryRequest $request): RedirectResponse
     {
         Country::create($request->all());
         return redirect()->route("country.index")
                         ->with("ok", __("Country has been saved"));
     }
-   
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function show($id)
     {
@@ -61,10 +68,10 @@ class CountryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Country $country
+     * @return Application|Factory|View
      */
-    public function edit(Country $country)
+    public function edit(Country $country): View|Factory|Application
     {
         return view("countries.edit", ["country" => $country]);
     }
@@ -72,11 +79,11 @@ class CountryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param CountryRequest $request
+     * @param Country $country
+     * @return RedirectResponse
      */
-    public function update(CountryRequest $request, Country $country)
+    public function update(CountryRequest $request, Country $country): RedirectResponse
     {
       $country->update($request->all());
       return redirect()->route("country.index")
@@ -86,14 +93,14 @@ class CountryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Country $country
+     * @return JsonResponse
      */
-    public function destroy(Country $country)
+    public function destroy(Country $country): JsonResponse
     {
         $country->delete();
 
         return response()->json();
     }
-    
+
 }

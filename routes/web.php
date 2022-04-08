@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CinemaController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\CountryController;
@@ -33,3 +36,9 @@ Route::get("profile", "UserController@profile")->middleware("auth");
 Route::resource("artist", ArtistController::class);
 Route::resource("country", CountryController::class);
 Route::resource("movie", MovieController::class);
+Route::resource("cinema", CinemaController::class);
+Route::resource("room", RoomController::class);
+Route::resource("session", SessionController::class);
+
+
+

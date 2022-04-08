@@ -2,7 +2,7 @@
     <x-slot name="title">
         Test
     </x-slot>
-<form method="POST" action="{{route('movie.update', $movie->id)}}">
+<form method="POST" action="{{route('movie.update', $movie->id)}}" enctype="multipart/form-data">
 {{ csrf_field() }}
 {{method_field("PUT")}}
 
@@ -23,19 +23,21 @@
         </option>
         @endforeach
     </select>
-</p> 
+</p>
  <p>
-    <select name="country_id" id="country_id" required>
-        @foreach($countries as $country)
+     <label class="text-gray-100" for="country_id">Country</label>
+     <select name="country_id" id="country_id" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+     @foreach($countries as $country)
         <option value="{{$country->id}}"{{$country->id == $movie->country_id ? 'selected="selected"' : ''}}>
             {{$country->name}}
         </option>
         @endforeach
     </select>
-</p> 
+</p>
 <p>
-    <label class="text-gray-100" for="poster">{{__("Poster")}}</label>
+    <label class="text-gray-100" for="poster">{{$movie->poster}}</label>
     <input type="file" name="poster" id="poster">
+    <img src="{{asset('storage/uploads/posters/'.$movie->poster)}}" alt="{{$movie->title}}" width="100px" height="150px">
 </p>
 
     <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update</button>

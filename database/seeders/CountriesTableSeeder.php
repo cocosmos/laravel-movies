@@ -18,7 +18,7 @@ class CountriesTableSeeder extends Seeder
     public function run()
     {
         Country::factory()
-                ->count(100)
+                ->count(20)
                 ->create();
     }
 }

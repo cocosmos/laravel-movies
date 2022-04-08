@@ -12,7 +12,7 @@ class Movie extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'title', "year", "length", "poster"
+        'title', "year", "length", "poster", "country_id", "director_id"
     ];
     public function country(){
         return $this->belongsTo(Country::class);

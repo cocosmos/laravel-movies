@@ -19,7 +19,9 @@
     <input type="number" name="birthdate" id="birthdate" value="{{$artist->birthdate}}" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
 </p>
 <p>
-    <select name="country_id" id="country_id" required>
+    <label class="text-gray-100" for="country_id">Country</label>
+
+    <select name="country_id" id="country_id" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
         @foreach($countries as $country)
         <option value="{{$country->id}}"{{$country->id == $artist->country_id ? 'selected="selected"' : ''}}>
             {{$country->name}}
