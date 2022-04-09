@@ -34,33 +34,6 @@ class ArtistController extends Controller
      */
     public function index(): View|Factory|Application
     {
-//        $LINK = "https://api.themoviedb.org/3/person/popular?api_key=a6e2a2fbd348b2a79b669a1ac0f1c36e&language=en-US&page=5";
-//
-//
-//        $artists = json_decode(Http::get($LINK), true);
-//
-//        foreach ($artists["results"] as $artist) {
-//            $img = storage_path("app/public/uploads/profiles" . $artist["profile_path"]);
-//            $url = 'https://image.tmdb.org/t/p/w500' . $artist["profile_path"];
-//
-//
-//            Image::make(file_get_contents($url))->fit(300, 300)
-//                ->save($img);
-//
-//
-//        }
-
-//        for ($i = 1; $i < 50; $i++) {
-//            $personLink = 'https://api.themoviedb.org/3/person/' . $i . '?api_key=a6e2a2fbd348b2a79b669a1ac0f1c36e&language=en-US';
-//
-//            $artist = json_decode(Http::get($personLink), true);
-//
-//
-//            preg_match('/(^[a-zA-Z]+)/', $artist["name"], $firstname);
-//            preg_match('/([a-zA-Z]+$)/', $artist["name"], $name);
-//            // preg_match('/([a-zA-Z]+$)/', $artist["place_of_birth"], $country);
-//            dd($name[0]);
-//        }
 
         return view('artists.index', ['artists' => Artist::orderBy('firstname', 'ASC')->get()]);
     }

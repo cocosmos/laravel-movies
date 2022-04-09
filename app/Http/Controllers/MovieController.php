@@ -31,6 +31,16 @@ class MovieController extends Controller
      */
     public function index(): View|Factory|Application
     {
+
+//        $actors = Movie::all()->first()->actors()->get();
+//        dd($actors);
+        /// $movie = Movie::with(["actors"])->first();
+        //  $actor = $movie->actors->first();
+
+//        $team = $user->teams->first();
+//        $teamRole = $team->pivot->teamRole;
+        //  dd($actor);
+
         return view('movies.index', ['movies' => Movie::orderBy('title', 'ASC')->get(), "countries" => Country::all()]);
     }
 
@@ -131,5 +141,13 @@ class MovieController extends Controller
         return response()->json();
     }
 
+    public function actors($id): Factory|View|Application
+    {
+        //dd($movie);
+        //dd(Movie::where('title', 'inception')->first()->actors()->get());
+//        $roles = Artist::where("id", 195)->first()->get();
+//        dd($roles);
+        return view('movies.actors', ["actors" => Movie::where("id", $id)->first()->actors()->get(), 'movie' => Movie::findOrFail($id)]);
+    }
 
 }

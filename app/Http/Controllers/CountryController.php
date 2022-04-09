@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CountryRequest;
 use App\Models\Country;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use App\Http\Requests\CountryRequest;
-use Illuminate\Http\Response;
 
 class CountryController extends Controller
 {
@@ -20,6 +18,7 @@ class CountryController extends Controller
         $this->middleware('auth')->only('create');
         $this->middleware('auth')->only('edit');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,8 +26,7 @@ class CountryController extends Controller
      */
     public function index(): View|Factory|Application
     {
-
-        return view('countries.index', ['countries' =>Country::orderBy('name', 'ASC')->get()]);
+        return view('countries.index', ['countries' => Country::orderBy('name', 'ASC')->get()]);
     }
 
     /**
@@ -51,13 +49,13 @@ class CountryController extends Controller
     {
         Country::create($request->all());
         return redirect()->route("country.index")
-                        ->with("ok", __("Country has been saved"));
+            ->with("ok", __("Country has been saved"));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return void
      */
     public function show($id)
@@ -85,9 +83,9 @@ class CountryController extends Controller
      */
     public function update(CountryRequest $request, Country $country): RedirectResponse
     {
-      $country->update($request->all());
-      return redirect()->route("country.index")
-                        ->with("ok", __("Country has been updated"));
+        $country->update($request->all());
+        return redirect()->route("country.index")
+            ->with("ok", __("Country has been updated"));
     }
 
     /**

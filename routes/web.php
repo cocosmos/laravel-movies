@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\CinemaController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ArtistController;
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\MovieController;
 
 
 /*
@@ -28,14 +28,21 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get("profile", "UserController@profile")->middleware("auth");
+
+Route::prefix('movie')->group(function () {
+    Route::get('{movie}/actors', [MovieController::class, 'actors'])->name('movie.actors');
+    //Route::post('{movie}/attach', [MovieController::class, 'attach'])->name('movie.attach');
+    // Route::delete('{movie}/detach/{artist}', [MovieController::class, 'detach'])->name('movie.detach');
+});
+Route::resource('movie', 'App\Http\Controllers\MovieController');
 
 
 Route::resource("artist", ArtistController::class);
 Route::resource("country", CountryController::class);
-Route::resource("movie", MovieController::class);
+//Route::resource("movie", MovieController::class);
 Route::resource("cinema", CinemaController::class);
 Route::resource("room", RoomController::class);
 Route::resource("session", SessionController::class);
