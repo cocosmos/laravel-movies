@@ -1,19 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Movie;
-use App\Models\Country;
-use App\Models\Artist;
 
 use App\Http\Requests\MovieRequest;
+use App\Models\Artist;
+use App\Models\Country;
+use App\Models\Movie;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Intervention\Image\Facades\Image;
 
 class MovieController extends Controller
@@ -25,6 +23,7 @@ class MovieController extends Controller
         $this->middleware('auth')->only('edit');
 
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +31,7 @@ class MovieController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        return view('movies.index', ['movies'=>Movie::orderBy('title', 'ASC')->get(), "countries"=> Country::all()]);
+        return view('movies.index', ['movies' => Movie::orderBy('title', 'ASC')->get(), "countries" => Country::all()]);
     }
 
     /**
@@ -44,7 +43,7 @@ class MovieController extends Controller
     public function create(Movie $movie): View|Factory|Application
     {
 
-        return view("movies.create", ["movie" => $movie,'artists'=>Artist::orderBy('name', 'ASC')->get(), "countries"=> Country::orderBy('name', 'ASC')->get()]);
+        return view("movies.create", ["movie" => $movie, 'artists' => Artist::orderBy('name', 'ASC')->get(), "countries" => Country::orderBy('name', 'ASC')->get()]);
 
     }
 
@@ -60,17 +59,17 @@ class MovieController extends Controller
     {
 
         $data = $request->all();
-       //$data["poster"]=$request->file("poster")->getClientOriginalName();
-        $data["poster"] = $request->input('title')."_".bin2hex(random_bytes(5)). ".jpg";
+        //$data["poster"]=$request->file("poster")->getClientOriginalName();
+        $data["poster"] = $request->input('title') . "_" . bin2hex(random_bytes(5)) . ".jpg";
 
         Movie::create($data);
 
         $poster = $request->file("poster");
-        Image::make($poster)->fit(412,608)
-                        ->save(storage_path("app/public/uploads/posters/" . $data["poster"]));
+        Image::make($poster)->fit(412, 608)
+            ->save(storage_path("app/public/uploads/posters/" . $data["poster"]));
 
         return redirect()->route("movie.index")
-                        ->with("ok", __("Movie has been saved"));
+            ->with("ok", __("Movie has been saved"));
     }
 
     /**
@@ -91,7 +90,7 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie): View|Factory|Application
     {
-        return view("movies.edit", ["movie" => $movie, 'artists'=>Artist::orderBy('name', 'ASC')->get(), "countries"=> Country::orderBy('name', 'ASC')->get()]);
+        return view("movies.edit", ["movie" => $movie, 'artists' => Artist::orderBy('name', 'ASC')->get(), "countries" => Country::orderBy('name', 'ASC')->get()]);
     }
 
     /**
@@ -105,18 +104,18 @@ class MovieController extends Controller
     public function update(MovieRequest $request, Movie $movie): RedirectResponse
     {
         $data = $request->all();
-        $data["poster"] = $request->input('title')."_".bin2hex(random_bytes(5)). ".jpg";
+        $data["poster"] = $request->input('title') . "_" . bin2hex(random_bytes(5)) . ".jpg";
 
         $movie->update($data);
         $request->file("poster");
 
         $poster = $request->file("poster");
 
-        Image::make($poster)->fit(412,608)
+        Image::make($poster)->fit(412, 608)
             ->save(storage_path("app/public/uploads/posters/" . $data["poster"]));
 
         return redirect()->route("movie.index")
-                        ->with("ok", __("Movie has been updated"));
+            ->with("ok", __("Movie has been updated"));
     }
 
     /**

@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\Country;
+use Illuminate\Database\Seeder;
 
 
 class CountriesTableSeeder extends Seeder
@@ -18,7 +16,9 @@ class CountriesTableSeeder extends Seeder
     public function run()
     {
         Country::factory()
-                ->count(20)
-                ->create();
+            ->count(150)
+            ->create();
     }
+
+
 }

@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Country;
 use App\Models\Artist;
+use App\Models\Country;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 
 /**
@@ -19,6 +19,8 @@ class MovieFactory extends Factory
      */
     public function definition()
     {
+
+
         return [
             "title" => $this->faker->word(),
             "year" => $this->faker->numberBetween(1902, 2010),

@@ -12,10 +12,8 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
-            $table->id();
-            $table->string("name", 150);
-            $table->timestamps();
+        Schema::table('artists', function (Blueprint $table) {
+            $table->string("image");
         });
     }
 
@@ -26,6 +24,8 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('countries');
+        Schema::table('artists', function (Blueprint $table) {
+            $table->dropColumn(["image"]);
+        });
     }
 };

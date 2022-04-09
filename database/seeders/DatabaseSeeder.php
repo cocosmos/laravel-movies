@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use Database\Factories\ArtistFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 
@@ -18,11 +16,11 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            CountriesTableSeeder::class,
-            ArtistsTableSeeder::class,
+            // CountriesTableSeeder::class,
+            //ArtistsTableSeeder::class,
             MoviesTableSeeder::class,
-            UserSeeder::class,
-            
+//            UserSeeder::class,
+
         ]);
     }
 }

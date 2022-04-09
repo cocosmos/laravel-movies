@@ -9,17 +9,22 @@ class Artist extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
-        'name', 'firstname', 'birthdate', 'country_id'
+    protected $fillable = [
+        'name', 'firstname', 'birthdate', 'country_id', 'image'
     ];
 
-    public function country(){
+    public function country()
+    {
         return $this->belongsTo(Country::class);
     }
-    public function hasDirected(){
+
+    public function hasDirected()
+    {
         return $this->hasMany(Movie::class, "director_id");
     }
-    public function hasPlayed(){
+
+    public function hasPlayed()
+    {
         return $this->belongsToMany(Movie::class)->withPivot("role_name");
     }
 }

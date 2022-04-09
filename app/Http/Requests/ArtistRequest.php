@@ -24,10 +24,12 @@ class ArtistRequest extends FormRequest
     public function rules()
     {
         return [
-            "name"=> "required|string|max:20",
-            "firstname"=> "required|string|max:15",
-            "birthdate"=> "required|int|max:2010",
-            "country_id"=>"required|exists:countries,id"
+            "name" => "required|string|max:20",
+            "firstname" => "required|string|max:15",
+            "birthdate" => "required|int|max:2010",
+            "country_id" => "required|exists:countries,id",
+            "image" => "required"
+
         ];
     }
 }

@@ -14,16 +14,25 @@ class Movie extends Model
     protected $fillable = [
         'title', "year", "length", "poster", "country_id", "director_id"
     ];
-    public function country(){
+
+
+    public function country()
+    {
         return $this->belongsTo(Country::class);
     }
-    public function director(){
+
+    public function director()
+    {
         return $this->belongsTo(Artist::class);
     }
-    public function actors(){
+
+    public function actors()
+    {
         return $this->belongsToMany(Artist::class);
     }
-    public function attach(){
+
+    public function attach()
+    {
         return $this->belongsTo(Artist::class);
     }
 }
