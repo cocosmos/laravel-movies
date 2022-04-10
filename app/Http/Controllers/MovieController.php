@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 class MovieController extends Controller
@@ -143,11 +144,29 @@ class MovieController extends Controller
 
     public function actors($id): Factory|View|Application
     {
-        //dd($movie);
-        //dd(Movie::where('title', 'inception')->first()->actors()->get());
-//        $roles = Artist::where("id", 195)->first()->get();
-//        dd($roles);
-        return view('movies.actors', ["actors" => Movie::where("id", $id)->first()->actors()->get(), 'movie' => Movie::findOrFail($id)]);
+
+        return view('movies.actors', ["actors" => Movie::where("id", $id)->first()->actors()->get(), 'movie' => Movie::findOrFail($id), 'artists' => Artist::orderBy('name', 'ASC')->get()]);
+    }
+
+
+    public function attach($id, Request $request): RedirectResponse
+    {
+        $data = $request->all();
+        Movie::find($id)->actors()->attach($data["artist_id"], ['role' => $data["role"]]);
+
+        return redirect()->route("movie.actors", $id)
+            ->with("ok", __("Actors has been added"));
+    }
+
+    public function detach($movieid, $actorid): RedirectResponse
+    {
+
+        Movie::find($movieid)->actors()->detach(Artist::find($actorid));
+
+
+        return redirect()->route("movie.actors", $movieid)
+            ->with("ok", __("Actors has been added"));
+
     }
 
 }

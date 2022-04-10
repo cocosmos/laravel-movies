@@ -39,13 +39,55 @@
                     <td class="px-6 py-4">{{$actor->birthdate}}</td>
 
                     <td class="px-6 py-4 text-right">
-                        <a href="{{route('movie.edit', $movie->id)}}"
-                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
-                        <a class="delete" href="{{route('movie.destroy', $movie->id)}}">{{__("Delete")}}</a></td>
+                        <a href="{{route('movie.detach', ["movie"=>$movie->id, "actor"=>$actor->id])}}"
+                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Detach')}}</a>
                 </tr>
             @endforeach
             </tbody>
         </table>
+        <form method="POST" action="{{route('movie.attach', $movie->id)}}" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <p>
+                <label class="text-gray-100" for="role">Role</label>
+                <input type="text" name="role" id="role" value="" required
+                       class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+            </p>
+            <p>
+                <label class="text-gray-100" for="artist_id">Actors</label>
+                <select name="artist_id" id="artist_id" required
+                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                    @foreach($artists as $artist)
+                        <option
+                            value="{{$artist->id}}"{{$artist->id == $movie->artist_id ? 'selected="selected"' : ''}}>
+                            {{$artist->name}}
+                            {{$artist->firstname}}
+                        </option>
+                    @endforeach
+                </select>
+            </p>
+            <button type="submit"
+                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Attach
+            </button>
+        </form>
+
+        @if ($errors->any())
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
+        @if (session("ok"))
+            <div>
+                {{session("ok")}}
+            </div>
+
+        @endif
     </div>
 
 </x-app>

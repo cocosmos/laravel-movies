@@ -34,13 +34,21 @@ Route::get("profile", "UserController@profile")->middleware("auth");
 
 Route::prefix('movie')->group(function () {
     Route::get('{movie}/actors', [MovieController::class, 'actors'])->name('movie.actors');
-    //Route::post('{movie}/attach', [MovieController::class, 'attach'])->name('movie.attach');
-    // Route::delete('{movie}/detach/{artist}', [MovieController::class, 'detach'])->name('movie.detach');
+    Route::post('{movie}/actors', [MovieController::class, 'attach'])->name('movie.attach');
+    Route::get('{movie}/actors/{actor}', [MovieController::class, 'detach'])->name('movie.detach');
 });
 Route::resource('movie', 'App\Http\Controllers\MovieController');
 
 
-Route::resource("artist", ArtistController::class);
+Route::prefix('artist')->group(function () {
+    Route::get('{artist}/filmography', [ArtistController::class, 'hasPlayed'])->name('artist.filmography');
+//    Route::get('{artist}/directed', [ArtistController::class, 'hasDirected'])->name('artist.filmography');
+
+
+});
+Route::resource('artist', 'App\Http\Controllers\ArtistController');
+
+//Route::resource("artist", ArtistController::class);
 Route::resource("country", CountryController::class);
 //Route::resource("movie", MovieController::class);
 Route::resource("cinema", CinemaController::class);

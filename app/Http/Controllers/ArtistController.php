@@ -128,5 +128,17 @@ class ArtistController extends Controller
         return response()->json();
     }
 
+    public function hasPlayed($id): Factory|View|Application
+    {
+        return view('artists.filmography', ["artist" => Artist::findOrFail($id), "movies" => Artist::find($id)->hasPlayed()->get()]);
+        //return view('movies.actors', ["actors" => Movie::where("id", $id)->first()->actors()->get(), 'movie' => Movie::findOrFail($id), 'artists' => Artist::orderBy('name', 'ASC')->get()
+    }
+
+//    public function hasDirected($id): Factory|View|Application
+//    {
+//        return view('artists.filmography', ["artist" => Artist::findOrFail($id), "movies" => Artist::find($id)->hasDirected()->get()]);
+//        //return view('movies.actors', ["actors" => Movie::where("id", $id)->first()->actors()->get(), 'movie' => Movie::findOrFail($id), 'artists' => Artist::orderBy('name', 'ASC')->get()
+//    }
+
 
 }

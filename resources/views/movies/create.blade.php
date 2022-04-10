@@ -1,6 +1,6 @@
 <x-app>
     <x-slot name="title">
-        Test
+        Create Movie
     </x-slot>
     <form method="POST" action="{{route('movie.store')}}" enctype="multipart/form-data">
         {{ csrf_field() }}

@@ -17,16 +17,21 @@
             </tr>
             </thead>
             <tbody>
+
             @foreach($cinemas as $cinema)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">{{$cinema->name}}</td>
                     <td class="px-6 py-4">{{$cinema->address}}</td>
                     <td class="px-6 py-4">{{$cinema->country->name}}</td>
                     <td class="px-6 py-4 text-right">
-                        <a href="{{route('cinema.edit', $cinema->id)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
+                        <a href="{{route('cinema.edit', $cinema->id)}}"
+                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
                         <a class="delete" href="{{route('cinema.destroy', $cinema->id)}}">{{__("Delete")}}</a></td>
                 </tr>
+
             @endforeach
+
+
             </tbody>
         </table>
     </div>

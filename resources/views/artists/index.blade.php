@@ -35,6 +35,8 @@
                     <td class="px-6 py-4">{{$artist->country->name}}</td>
                     <td class="px-6 py-4">{{$artist->birthdate}}</td>
                     <td class="px-6 py-4 text-right">
+                        <a href="{{route('artist.filmography', $artist->id)}}"
+                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Filmography')}}</a>
                         <a href="{{route('artist.edit', $artist->id)}}"
                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
                         <a class="delete" href="{{route('artist.destroy', $artist->id)}}">{{__("Delete")}}</a></td>

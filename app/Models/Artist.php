@@ -16,6 +16,7 @@ class Artist extends Model
         'name', 'firstname', 'birthdate', 'country_id', 'image'
     ];
 
+
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
