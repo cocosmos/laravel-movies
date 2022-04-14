@@ -26,6 +26,8 @@ class CountriesTableSeeder extends Seeder
                 ->create(
                     [
                         "name" => $country["name"]["common"],
+                        "user_id" => 5
+
                     ]);
         }
 

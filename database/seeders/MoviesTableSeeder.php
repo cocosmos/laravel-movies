@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Artist;
+use App\Models\Country;
 use App\Models\Movie;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
@@ -20,7 +23,7 @@ class MoviesTableSeeder extends Seeder
     public function run()
 
     {
-        $LINK = "https://api.themoviedb.org/3/discover/movie?api_key=a6e2a2fbd348b2a79b669a1ac0f1c36e&with_original_language=en&sort_by=vote_count.desc&page=2";
+        $LINK = "https://api.themoviedb.org/3/discover/movie?api_key=a6e2a2fbd348b2a79b669a1ac0f1c36e&with_original_language=en&sort_by=vote_count.desc&page=1";
 
 
         $movies = json_decode(Http::get($LINK), true);
@@ -37,10 +40,11 @@ class MoviesTableSeeder extends Seeder
                     [
                         'title' => $movie["original_title"],
                         'year' => Carbon::parse($movie["release_date"])->format('Y'),
-                        "director_id" => random_int(160, 180),
-                        "country_id" => random_int(70, 100),
+                        "director_id" => Artist::all()->random()->id,
+                        "country_id" => Country::all()->random()->id,
                         "length" => $movie["runtime"],
-                        "poster" => $movie["poster_path"]
+                        "poster" => $movie["poster_path"],
+                        "user_id" => User::all()->random()->id,
 
                     ]
                 );

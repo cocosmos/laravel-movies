@@ -16,10 +16,15 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            CountriesTableSeeder::class,
+            //UserSeeder::class,
+            // CountriesTableSeeder::class,
+            // CinemasTableSeeder::class,
+            // RoomsTableSeeder::class,
+
             //ArtistsTableSeeder::class,
-            //MoviesTableSeeder::class,
-//            UserSeeder::class,
+            MoviesTableSeeder::class,
+            // SessionsTableSeeder::class,
+            ArtistMovieTableSeeder::class
 
         ]);
     }

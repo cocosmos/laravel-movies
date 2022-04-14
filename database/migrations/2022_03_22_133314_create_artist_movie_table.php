@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('artist_movie', function (Blueprint $table) {
             $table->id();
-            $table->string("role", 20);
+            $table->string("role");
             $table->foreignId("movie_id")->constrained("movies");
             $table->foreignId("artist_id")->constrained("artists");
             $table->timestamps();

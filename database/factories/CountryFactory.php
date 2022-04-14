@@ -19,6 +19,7 @@ class CountryFactory extends Factory
         return [
 
             "name" => $this->faker->country(),
+            "user_id" => random_int(3, 4),
 
         ];
     }
