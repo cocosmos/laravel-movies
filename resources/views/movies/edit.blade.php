@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Edit movie
     </x-slot>
@@ -29,7 +29,7 @@
             <select name="director_id" id="director_id" required
                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
                 @foreach($artists as $artist)
-                    <option value="{{$artist->id}}"{{$artist->id == $movie->artist_id ? 'selected="selected"' : ''}}>
+                    <option value="{{$artist->id}}"{{$artist->id == $movie->director_id ? 'selected="selected"' : ''}}>
                         {{$artist->name}}
                         {{$artist->firstname}}
                     </option>
@@ -79,4 +79,4 @@
             {{session("ok")}}
         </div>
     @endif
-</x-app>
+</x-app-layout>

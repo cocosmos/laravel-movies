@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Edit cinema
     </x-slot>
@@ -54,4 +54,4 @@
             {{session("ok")}}
         </div>
     @endif
-</x-app>
+</x-app-layout>

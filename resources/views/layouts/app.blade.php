@@ -17,46 +17,28 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body class="font-sans antialiased bg-gray-900 text-gray-100">
-@include('layouts.navigation')
+@include('components.navigation')
 
-<!-- Page Heading -->
-<header class=" shadow">
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <h1 class="font-semibold text-xl leading-tight">
-            {{ $header }}
-        </h1>
-    </div>
-</header>
-
-<!-- Page Content -->
 <main>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class=" overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-gray-800 border-b border-gray-200">
+                <div class="p-6 bg-gray-800 border-b border-gray-800">
+                    <div class="flex justify-between mb-5">
+                        <h1 class="font-semibold text-3xl leading-tight">
+                            {{ $title }}
+                        </h1>
+                        @auth()
+                            {{$link}}
+                        @endauth
+                    </div>
+
                     {{ $slot }}
                 </div>
             </div>
         </div>
     </div>
 </main>
-<script>
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
-    document.querySelectorAll(".delete").forEach(item => {
-        item.addEventListener("click", event => {
-            event.preventDefault();
-
-            fetch(event.target.href, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': token
-                },
-                method: 'DELETE',
-
-            })
-        })
-    });
-</script>
 </body>
 </html>

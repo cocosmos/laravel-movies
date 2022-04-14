@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class CountryController extends Controller
 {
@@ -47,7 +48,10 @@ class CountryController extends Controller
      */
     public function store(CountryRequest $request): RedirectResponse
     {
-        Country::create($request->all());
+        $data = $request->all();
+        $data["user_id"] = Auth::user()->id;
+        Country::create($data);
+
         return redirect()->route("country.index")
             ->with("ok", __("Country has been saved"));
     }
@@ -83,9 +87,14 @@ class CountryController extends Controller
      */
     public function update(CountryRequest $request, Country $country): RedirectResponse
     {
-        $country->update($request->all());
-        return redirect()->route("country.index")
-            ->with("ok", __("Country has been updated"));
+        if ($country->user_id == Auth::user()->id) {
+
+            $country->update($request->all());
+            return redirect()->route("country.index")
+                ->with("ok", __("Country has been updated"));
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     /**
@@ -96,9 +105,13 @@ class CountryController extends Controller
      */
     public function destroy(Country $country): JsonResponse
     {
-        $country->delete();
+        if ($country->user_id == Auth::user()->id) {
+            $country->delete();
 
-        return response()->json();
+            return response()->json();
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
 }

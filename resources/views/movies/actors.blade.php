@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Actors for :
     </x-slot>
@@ -92,4 +92,4 @@
         @endif
     </div>
 
-</x-app>
+</x-app-layout>

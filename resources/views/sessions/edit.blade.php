@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Edit session
     </x-slot>
@@ -14,7 +14,7 @@
             <select name="movie_id" id="movie_id" required
                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
                 @foreach($movies as $movie)
-                    <option value="{{$movie->id}}"{{$movie->id == $movie->movie_id ? 'selected="selected"' : ''}}>
+                    <option value="{{$movie->id}}"{{$movie->id == $session->movie_id ? 'selected="selected"' : ''}}>
                         {{$movie->title}}
                     </option>
                 @endforeach
@@ -25,8 +25,8 @@
             <select name="room_id" id="room_id" required
                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
                 @foreach($rooms as $room)
-                    <option value="{{$room->id}}"{{$room->id == $room->room_id ? 'selected="selected"' : ''}}>
-                        {{$room->name}}
+                    <option value="{{$room->id}}"{{$room->id == $session->room_id ? 'selected="selected"' : ''}}>
+                        {{$room->cinema->name}} : {{$room->name}}
                     </option>
                 @endforeach
             </select>
@@ -59,4 +59,4 @@
             {{session("ok")}}
         </div>
     @endif
-</x-app>
+</x-app-layout>

@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Sessions
     </x-slot>
@@ -23,12 +23,15 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">{{__("Poster")}}</th>
-                <th scope="col" class="px-6 py-3">{{__("Movie Title")}}</th>
-                <th scope="col" class="px-6 py-3">{{__("Date")}}</th>
-                <th scope="col" class="px-6 py-3">{{__("Start Time")}}</th>
-                <th scope="col" class="px-6 py-3">{{__("Finish Time")}}</th>
-                <th scope="col" class="px-6 py-3">{{__("Room Name")}}</th>
-                <th scope="col" class="px-6 py-3 text-right">{{__("Actions")}}</th>
+                <th scope="col" class="px-6 py-3">{{__("Title")}}</th>
+                <th scope="col" class="px-6 py-3">{{__("Begin")}}</th>
+                {{--                <th scope="col" class="px-6 py-3">{{__("Start Time")}}</th>--}}
+                <th scope="col" class="px-6 py-3">{{__("Finish at")}}</th>
+                <th scope="col" class="px-6 py-3">{{__("Cinema")}}</th>
+                <th scope="col" class="px-6 py-3">{{__("Room")}}</th>
+                @auth()
+                    <th scope="col" class="px-6 py-3 text-right">{{__("Actions")}}</th>
+                @endauth
             </tr>
             </thead>
             <tbody>
@@ -38,21 +41,26 @@
                                                alt="{{$session->movie->title}}" width="200px" height="150px"></td>
 
                     <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-center">
-                        <span class="text-xl">{{$session->movie->title}}</span>
+                        <span class="text-lg">{{$session->movie->title}}</span>
                         <br><span>{{$session->movie->length}} min</span>
 
                     </td>
-                    <td class="px-6 py-4">{{\Carbon\Carbon::parse($session->start_time)->format('l d.m.Y') }} </td>
-                    <td class="px-6 py-4">{{\Carbon\Carbon::parse($session->start_time)->format('H:i') }} </td>
+                    <td class="px-6 py-4 text-base text-center">{{\Carbon\Carbon::parse($session->start_time)->format('l d.m.Y H:i') }} </td>
                     <td class="px-6 py-4">{{ \Carbon\Carbon::parse($session->start_time)->addMinutes($session->movie->length)->format('H:i')}} </td>
+                    <td class="px-6 py-4">{{$session->room->cinema->name}}</td>
                     <td class="px-6 py-4">{{$session->room->name}}</td>
-                    <td class="px-6 py-4 text-right">
-                        <a href="{{route('session.edit', $session->id)}}"
-                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
-                        <a class="delete" href="{{route('session.destroy', $session->id)}}">{{__("Delete")}}</a></td>
+                    <x-buttons>
+                        <x-slot name="specialLink"></x-slot>
+
+                        <x-slot name="editLink">{{route('session.edit', $session->id)}}</x-slot>
+                        <x-slot name="deleteLink">{{route('session.destroy', $session->id)}}</x-slot>
+                    </x-buttons>
+                   
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
-</x-app>
+    @include("components.script")
+
+</x-app-layout>

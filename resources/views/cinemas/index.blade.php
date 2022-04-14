@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         {{ __('Cinema') }}
 
@@ -25,7 +25,9 @@
                 <th scope="col" class="px-6 py-3">{{__("Name")}}</th>
                 <th scope="col" class="px-6 py-3">{{__("Address")}}</th>
                 <th scope="col" class="px-6 py-3">{{__("Country")}}</th>
-                <th scope="col" class="px-6 py-3 text-right">{{__("Actions")}}</th>
+                @auth()
+                    <th scope="col" class="px-6 py-3 text-right">{{__("Actions")}}</th>
+                @endauth
 
             </tr>
             </thead>
@@ -36,10 +38,12 @@
                     <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">{{$cinema->name}}</td>
                     <td class="px-6 py-4">{{$cinema->address}}</td>
                     <td class="px-6 py-4">{{$cinema->country->name}}</td>
-                    <td class="px-6 py-4 text-right">
-                        <a href="{{route('cinema.edit', $cinema->id)}}"
-                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
-                        <a class="delete" href="{{route('cinema.destroy', $cinema->id)}}">{{__("Delete")}}</a></td>
+                    <x-buttons>
+                        <x-slot name="specialLink"></x-slot>
+                        <x-slot name="editLink">{{route('cinema.edit', $cinema->id)}}</x-slot>
+                        <x-slot name="deleteLink">{{route('cinema.destroy', $cinema->id)}}</x-slot>
+                    </x-buttons>
+
                 </tr>
 
             @endforeach
@@ -48,4 +52,6 @@
             </tbody>
         </table>
     </div>
-</x-app>
+    @include("components.script")
+
+</x-app-layout>

@@ -9,6 +9,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class CinemaController extends Controller
 {
@@ -51,6 +52,7 @@ class CinemaController extends Controller
     public function store(CinemaRequest $request): RedirectResponse
     {
         $data = $request->all();
+        $data["user_id"] = Auth::user()->id;
 
         Cinema::create($data);
         return redirect()->route("cinema.index")
@@ -87,11 +89,16 @@ class CinemaController extends Controller
      */
     public function update(CinemaRequest $request, Cinema $cinema): RedirectResponse
     {
-        $data = $request->all();
-        $cinema->update($data);
+        if ($cinema->user_id == Auth::user()->id) {
 
-        return redirect()->route("cinema.index")
-            ->with("ok", __("Cinema has been updated"));
+            $data = $request->all();
+            $cinema->update($data);
+
+            return redirect()->route("cinema.index")
+                ->with("ok", __("Cinema has been updated"));
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     /**
@@ -102,7 +109,11 @@ class CinemaController extends Controller
      */
     public function destroy(Cinema $cinema): RedirectResponse
     {
-        $cinema->delete();
-        return redirect()->back();
+        if ($cinema->user_id == Auth::user()->id) {
+            $cinema->delete();
+            return redirect()->back();
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 }

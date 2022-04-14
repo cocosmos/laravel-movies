@@ -24,12 +24,12 @@ class MovieRequest extends FormRequest
     public function rules()
     {
         return [
-            "title"=> "required|string|max:30",
-            "year"=> "required|string|max:4",
-            "length"=> "required|string|max:11",
-            "country_id"=>"required|exists:countries,id",
-            "director_id"=>"required|exists:artists,id",
-            "poster"=>"required"
+            "title" => "required|string|max:30",
+            "year" => "required|string|max:4",
+            "length" => "required|string|max:11",
+            "country_id" => "required|exists:countries,id",
+            "director_id" => "required|exists:artists,id",
+//            "poster" => "required"
         ];
     }
 }

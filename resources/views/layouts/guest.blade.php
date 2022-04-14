@@ -19,7 +19,6 @@
 <body class="dark:bg-gray-800 dark:border-gray-700 text-gray-900">
 <div class="font-sans text-gray-900 antialiased">
     {{ $slot }}
-    vsav
 </div>
 </body>
 </html>

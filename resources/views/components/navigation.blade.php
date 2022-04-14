@@ -12,24 +12,7 @@
 
                 <!-- Navigation Links -->
                 <div class="space-x-8 sm:-my-px sm:ml-10 sm:flex sme:hidden">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('Cinema') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('room.index')" :active="request()->routeIs('room.index')">
-                        {{ __('Rooms') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('session.index')" :active="request()->routeIs('session.index')">
-                        {{ __('Sessions') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('movie.index')" :active="request()->routeIs('movie.index')">
-                        {{ __('Movies') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('artist.index')" :active="request()->routeIs('artist.index')">
-                        {{ __('Artists') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('country.index')" :active="request()->routeIs('country.index')">
-                        {{ __('Countries') }}
-                    </x-nav-link>
+                    @include("components.menu")
                 </div>
             </div>
             <!-- Settings Dropdown -->
@@ -100,24 +83,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                {{ __('Cinema') }}
-            </x-nav-link>
-            <x-nav-link :href="route('room.index')" :active="request()->routeIs('room.index')">
-                {{ __('Rooms') }}
-            </x-nav-link>
-            <x-nav-link :href="route('session.index')" :active="request()->routeIs('session.index')">
-                {{ __('Sessions') }}
-            </x-nav-link>
-            <x-nav-link :href="route('movie.index')" :active="request()->routeIs('movie.index')">
-                {{ __('Movies') }}
-            </x-nav-link>
-            <x-nav-link :href="route('artist.index')" :active="request()->routeIs('artist.index')">
-                {{ __('Artists') }}
-            </x-nav-link>
-            <x-nav-link :href="route('country.index')" :active="request()->routeIs('country.index')">
-                {{ __('Countries') }}
-            </x-nav-link>
+            @include("components.menu")
         </div>
 
 

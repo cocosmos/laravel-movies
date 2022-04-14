@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Countries
     </x-slot>
@@ -21,7 +21,9 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">{{__("Name")}}</th>
-                <th scope="col" class="px-6 py-3 text-right">{{__("Actions")}}</th>
+                @auth()
+                    <th scope="col" class="px-6 py-3 text-right">{{__("Actions")}}</th>
+                @endauth
 
             </tr>
             </thead>
@@ -30,13 +32,16 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <td scope="row"
                         class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">{{$country->name}}</td>
-                    <td class="px-6 py-4 text-right">
-                        <a href="{{route('country.edit', $country->id)}}"
-                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
-                        <a class="delete" href="{{route('country.destroy', $country->id)}}">{{__("Delete")}}</a></td>
+                    <x-buttons>
+                        <x-slot name="specialLink"></x-slot>
+                        <x-slot name="editLink">{{route('country.edit', $country->id)}}</x-slot>
+                        <x-slot name="deleteLink">{{route('country.destroy', $country->id)}}</x-slot>
+                    </x-buttons>
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
-</x-app>
+    @include("components.script")
+
+</x-app-layout>

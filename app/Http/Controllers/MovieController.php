@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 class MovieController extends Controller
@@ -24,8 +25,6 @@ class MovieController extends Controller
         $this->middleware('auth')->only('edit');
         $this->middleware('auth')->only('attach');
         $this->middleware('auth')->only('detach');
-
-
     }
 
     /**
@@ -35,7 +34,7 @@ class MovieController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        
+
         return view('movies.index', ['movies' => Movie::orderBy('title', 'ASC')->get(), "countries" => Country::all()]);
     }
 
@@ -64,8 +63,11 @@ class MovieController extends Controller
     {
 
         $data = $request->all();
-        //$data["poster"]=$request->file("poster")->getClientOriginalName();
-        $data["poster"] = $request->input('title') . "_" . bin2hex(random_bytes(5)) . ".jpg";
+        $data["user_id"] = Auth::user()->id;
+
+        $badChar = array(" ", ":", '"', "'", ";", "!", "$");
+        $cleanTitle = str_replace($badChar, "_", $request->input('title'));
+        $data["poster"] = $cleanTitle . "_" . bin2hex(random_bytes(5)) . ".jpg";
 
         Movie::create($data);
 
@@ -108,19 +110,31 @@ class MovieController extends Controller
      */
     public function update(MovieRequest $request, Movie $movie): RedirectResponse
     {
-        $data = $request->all();
-        $data["poster"] = $request->input('title') . "_" . bin2hex(random_bytes(5)) . ".jpg";
+        if ($movie->user_id == Auth::user()->id) {
+            $data = $request->all();
 
-        $movie->update($data);
-        $request->file("poster");
+            if (!isset($data["poster"])) {
+                $data["poster"] = $movie->poster;
+            } else {
+                $badChar = array(" ", ":", '"', "'", ";", "!", "$");
+                $cleanTitle = str_replace($badChar, "_", $request->input('title'));
 
-        $poster = $request->file("poster");
+                $data["poster"] = $cleanTitle . "_" . bin2hex(random_bytes(5)) . ".jpg";
+                $request->file("poster");
 
-        Image::make($poster)->fit(412, 608)
-            ->save(storage_path("app/public/uploads/posters/" . $data["poster"]));
+                $poster = $request->file("poster");
+                Image::make($poster)->fit(412, 608)
+                    ->save(storage_path("app/public/uploads/posters/" . $data["poster"]));
+            }
 
-        return redirect()->route("movie.index")
-            ->with("ok", __("Movie has been updated"));
+            $movie->update($data);
+
+
+            return redirect()->route("movie.index")
+                ->with("ok", __("Movie has been updated"));
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     /**
@@ -131,9 +145,14 @@ class MovieController extends Controller
      */
     public function destroy(Movie $movie): JsonResponse
     {
-        $movie->delete();
+        if ($movie->user_id == Auth::user()->id) {
 
-        return response()->json();
+            $movie->delete();
+
+            return response()->json();
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     public function actors($id): Factory|View|Application
@@ -143,23 +162,30 @@ class MovieController extends Controller
     }
 
 
-    public function attach($id, Request $request): RedirectResponse
+    public function attach(Request $request, Movie $movie): RedirectResponse
     {
-        $data = $request->all();
-        Movie::find($id)->actors()->attach($data["artist_id"], ['role' => $data["role"]]);
 
-        return redirect()->route("movie.actors", $id)
-            ->with("ok", __("Actors has been added"));
+        if ($movie->user_id == Auth::user()->id) {
+            $data = $request->all();
+            $movie->actors()->attach($data["artist_id"], ['role' => $data["role"]]);
+
+            return redirect()->route("movie.actors", $movie)
+                ->with("ok", __("Actor has been added"));
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
-    public function detach($movieid, $actorid): RedirectResponse
+    public function detach(Movie $movie, $actorid): RedirectResponse
     {
+        if ($movie->user_id == Auth::user()->id) {
+            $movie->actors()->detach(Artist::find($actorid));
+            return redirect()->route("movie.actors", $movie)
+                ->with("ok", __("Actor has been removed"));
+        }
 
-        Movie::find($movieid)->actors()->detach(Artist::find($actorid));
+        abort(403, 'Unauthorized action.');
 
-
-        return redirect()->route("movie.actors", $movieid)
-            ->with("ok", __("Actors has been added"));
 
     }
 

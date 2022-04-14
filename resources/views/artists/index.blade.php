@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Artists
     </x-slot>
@@ -23,7 +23,9 @@
                 <th scope="col" class="px-6 py-3">{{__("Name")}}</th>
                 <th scope="col" class="px-6 py-3">{{__("Country")}}</th>
                 <th scope="col" class="px-6 py-3">{{__("Birthdate")}}</th>
-                <th scope="col" class="px-6 py-3 text-right">{{__("Actions")}}</th>
+                @auth()
+                    <th scope="col" class="px-6 py-3 text-right">{{__("Actions")}}</th>
+                @endauth
 
             </tr>
             </thead>
@@ -46,15 +48,21 @@
                     <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">{{$artist->firstname}} {{$artist->name}}</td>
                     <td class="px-6 py-4">{{$artist->country->name}}</td>
                     <td class="px-6 py-4">{{$artist->birthdate}}</td>
-                    <td class="px-6 py-4 text-right">
-                        <a href="{{route('artist.filmography', $artist->id)}}"
-                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Filmography')}}</a>
-                        <a href="{{route('artist.edit', $artist->id)}}"
-                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
-                        <a class="delete" href="{{route('artist.destroy', $artist->id)}}">{{__("Delete")}}</a></td>
+
+                    <x-buttons>
+                        <x-slot name="specialLink">
+                            <a href="{{route('artist.filmography', $artist->id)}}"
+                               class="font-medium text-blue-100 hover:underline mr-2">{{__('Filmography')}}</a>
+                        </x-slot>
+
+                        <x-slot name="editLink">{{route('artist.edit', $artist->id)}}</x-slot>
+                        <x-slot name="deleteLink">{{route('artist.destroy', $artist->id)}}</x-slot>
+                    </x-buttons>
+
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
-</x-app>
+    @include("components.script")
+</x-app-layout>

@@ -106,15 +106,23 @@ class ArtistController extends Controller
      */
     public function update(ArtistRequest $request, Artist $artist): RedirectResponse
     {
-        $data = $request->all();
-        $data["image"] = $request->input('name') . "_" . bin2hex(random_bytes(5)) . ".jpg";
-        $artist->update($data);
-        $image = $request->file("image");
-        Image::make($image)->fit(500, 500)
-            ->save(storage_path("app/public/uploads/profiles/" . $data["image"]));
+        if ($artist->user_id == Auth::user()->id) {
+            $data = $request->all();
+            if (!isset($data["image"])) {
+                $data["image"] = $artist->image;
+            } else {
+                $data["image"] = $request->input('name') . "_" . bin2hex(random_bytes(5)) . ".jpg";
+                $image = $request->file("image");
+                Image::make($image)->fit(500, 500)
+                    ->save(storage_path("app/public/uploads/profiles/" . $data["image"]));
+            }
+            $artist->update($data);
 
-        return redirect()->route("artist.index")
-            ->with("ok", __("Artist has been updated"));
+            return redirect()->route("artist.index")
+                ->with("ok", __("Artist has been updated"));
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     /**
@@ -125,9 +133,13 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist): JsonResponse
     {
-        $artist->delete();
+        if ($artist->user_id == Auth::user()->id) {
+            $artist->delete();
+            return response()->json();
+        }
 
-        return response()->json();
+        abort(403, 'Unauthorized action.');
+
     }
 
     public function hasPlayed($id): Factory|View|Application

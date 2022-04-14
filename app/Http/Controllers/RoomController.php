@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoomRequest;
 use App\Models\Cinema;
 use App\Models\Room;
-use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
@@ -25,10 +25,11 @@ class RoomController extends Controller
         $this->middleware('auth')->only('edit');
 
     }
+
     public function index(): Factory|View|Application
     {
 
-        return view('rooms.index', ['rooms'=>Room::orderBy('name', 'ASC')->get(), "cinemas"=> Cinema::all()]);
+        return view('rooms.index', ['rooms' => Room::orderBy('name', 'ASC')->get(), "cinemas" => Cinema::all()]);
 
     }
 
@@ -40,7 +41,8 @@ class RoomController extends Controller
      */
     public function create(Room $room): View|Factory|Application
     {
-        return view("rooms.create", ["rooms" => $room,'cinemas'=>Cinema::orderBy('name', 'ASC')->get()]);
+
+        return view("rooms.create", ["rooms" => $room, 'cinemas' => Cinema::orderBy('name', 'ASC')->get()]);
 
     }
 
@@ -52,7 +54,8 @@ class RoomController extends Controller
      */
     public function store(RoomRequest $request): RedirectResponse
     {
-        $data=$request->all();
+        $data = $request->all();
+        $data["user_id"] = Auth::user()->id;
         Room::create($data);
         return redirect()->route("room.index")
             ->with("ok", __("Room has been saved"));
@@ -77,7 +80,7 @@ class RoomController extends Controller
      */
     public function edit(Room $room): View|Factory|Application
     {
-        return view("rooms.edit", ["room" => $room, 'cinemas'=>Cinema::orderBy('name', 'ASC')->get()]);
+        return view("rooms.edit", ["room" => $room, 'cinemas' => Cinema::orderBy('name', 'ASC')->get()]);
 
     }
 
@@ -90,10 +93,14 @@ class RoomController extends Controller
      */
     public function update(RoomRequest $request, Room $room): RedirectResponse
     {
-        $data = $request->all();
-        $room->update($data);
-        return redirect()->route("room.index")
-            ->with("ok", __("Movie has been updated"));
+        if ($room->user_id == Auth::user()->id) {
+            $data = $request->all();
+            $room->update($data);
+            return redirect()->route("room.index")
+                ->with("ok", __("Movie has been updated"));
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     /**
@@ -104,8 +111,13 @@ class RoomController extends Controller
      */
     public function destroy(Room $room): RedirectResponse
     {
-        $room->delete();
-        return redirect()->back();
+        if ($room->user_id == Auth::user()->id) {
+
+            $room->delete();
+            return redirect()->back();
+        }
+
+        abort(403, 'Unauthorized action.');
 
     }
 }

@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Create Session
     </x-slot>
@@ -20,12 +20,12 @@
             </select>
         </p>
         <p>
-            <label class="text-gray-100" for="room_id">room</label>
+            <label class="text-gray-100" for="room_id">Room</label>
             <select name="room_id" id="room_id" required
                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
                 @foreach($rooms as $room)
                     <option value="{{$room->id}}"{{$room->id == $room->room_id ? 'selected="selected"' : ''}}>
-                        {{$room->name}}
+                        {{$room->cinema->name}} : {{$room->name}}
                     </option>
                 @endforeach
             </select>
@@ -59,4 +59,4 @@
             {{session("ok")}}
         </div>
     @endif
-</x-app>
+</x-app-layout>

@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Edit Country
     </x-slot>
@@ -34,4 +34,4 @@
             {{session("ok")}}
         </div>
     @endif
-</x-app>
+</x-app-layout>

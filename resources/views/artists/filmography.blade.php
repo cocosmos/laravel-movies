@@ -1,4 +1,4 @@
-<x-app>
+<x-app-layout>
     <x-slot name="title">
         Filmography
     </x-slot>
@@ -55,4 +55,4 @@
 
     </div>
 
-</x-app>
+</x-app-layout>

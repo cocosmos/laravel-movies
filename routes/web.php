@@ -44,6 +44,7 @@ Route::prefix('artist')->group(function () {
     //    Route::get('{artist}/directed', [ArtistController::class, 'hasDirected'])->name('artist.filmography');
 });
 
+
 Route::resource("artist", ArtistController::class);
 Route::resource("country", CountryController::class);
 Route::resource("movie", MovieController::class);

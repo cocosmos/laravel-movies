@@ -28,7 +28,7 @@ class ArtistRequest extends FormRequest
             "firstname" => "required|string|max:15",
             "birthdate" => "required|int|max:2010",
             "country_id" => "required|exists:countries,id",
-            "image" => "required"
+//            "image" => "required"
 
         ];
     }

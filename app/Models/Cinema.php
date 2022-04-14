@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Cinema extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'name', "address", "country_id",
+        'name', "address", "country_id", "user_id"
     ];
 
 
-    public function country(){
+    public function country()
+    {
         return $this->belongsTo(Country::class);
     }
 }

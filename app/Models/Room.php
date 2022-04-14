@@ -9,11 +9,12 @@ class Room extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
-        'name', 'size','cinema_id'
+    protected $fillable = [
+        'name', 'size', 'cinema_id', "user_id"
     ];
 
-    public function cinema(){
+    public function cinema()
+    {
         return $this->belongsTo(Cinema::class);
     }
 }
