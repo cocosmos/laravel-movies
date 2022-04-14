@@ -1,18 +1,20 @@
 <x-app>
     <x-slot name="title">
-        Actors for : {{$movie->title}}
+        Actors for :
+    </x-slot>
+    <x-slot name="link">
+
     </x-slot>
     <div class="flex flex-wrap justify-center">
         <div class=" text-center">
-            <h1 class="text-5xl font-normal leading-normal mt-0 mb-2 text-stone-100">Actors for : <br> {{$movie->title}}
+            <h1 class="text-5xl font-normal leading-normal mt-0 mb-2 text-stone-100">{{$movie->title}}
             </h1>
             <img src="{{asset('storage/uploads/posters/'.$movie->poster)}}"
-                 alt="{{$movie->title}}" width="500px" height="500px">
+                 alt="{{$movie->title}}" width="400px" height="400px" class="mb-5">
         </div>
     </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-
 
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

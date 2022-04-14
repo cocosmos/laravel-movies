@@ -2,6 +2,9 @@
     <x-slot name="title">
         Create Room
     </x-slot>
+    <x-slot name="link">
+
+    </x-slot>
     <form method="POST" action="{{route('room.store')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
 

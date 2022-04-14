@@ -1,14 +1,19 @@
 <x-app>
     <x-slot name="title">
-        Movies where {{$artist->firstname }} {{$artist->name }}
+        Filmography
+    </x-slot>
+    <x-slot name="link">
+
     </x-slot>
     <div class="flex flex-wrap justify-center">
         <div class=" text-center">
-            <h1 class="text-5xl font-normal leading-normal mt-0 mb-2 text-stone-100">Movies
-                where {{$artist->firstname }} {{$artist->name }} as played
-            </h1>
+            {{--            <h1 class="text-5xl font-normal leading-normal mt-0 mb-2 text-stone-100">Movies--}}
+            {{--                where {{$artist->firstname }} {{$artist->name }} as played--}}
+            {{--            </h1>--}}
             <img src="{{asset('storage/uploads/profiles/'.$artist->image)}}"
-                 alt="{{$artist->firstname }} {{$artist->name }}" width="300px" height="300px">
+                 alt="{{$artist->firstname }} {{$artist->name }}" width="200px" height="200px"
+                 class="mb-5 rounded-full">
+            <h2 class="mb-5 text-xl">{{$artist->firstname }} {{$artist->name }}</h2>
         </div>
     </div>
 

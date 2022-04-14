@@ -2,6 +2,9 @@
     <x-slot name="title">
         Test
     </x-slot>
+    <x-slot name="link">
+
+    </x-slot>
     <form method="POST" action="{{route('artist.store')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
 

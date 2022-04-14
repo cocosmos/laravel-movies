@@ -2,6 +2,9 @@
     <x-slot name="title">
         Create Movie
     </x-slot>
+    <x-slot name="link">
+
+    </x-slot>
     <form method="POST" action="{{route('movie.store')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
 

@@ -2,9 +2,24 @@
     <x-slot name="title">
         Rooms
     </x-slot>
+    <x-slot name="link">
+
+    </x-slot>
+    <x-slot name="link">
+        <a class="bg-blue-900 hover:bg-blue-800 text-gray-200 font-bold py-2 px-4 rounded inline-flex items-center"
+           href="{{ route('room.create') }}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="feather feather-plus-circle w-5 h-5 mr-2 ">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="16"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+            <span> {{__("Create")}}</span>
+        </a>
+    </x-slot>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <a class="text-gray-100" href="{{ route('room.create') }}">{{__("Create")}}</a>
 
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -12,7 +27,7 @@
                 <th scope="col" class="px-6 py-3">{{__("Name")}}</th>
                 <th scope="col" class="px-6 py-3">{{__("Size")}}</th>
                 <th scope="col" class="px-6 py-3">{{__("Cinema")}}</th>
-                <th scope="col" class="px-6 py-3">{{__("Actions")}}</th>
+                <th scope="col" class="px-6 py-3 text-right">{{__("Actions")}}</th>
 
             </tr>
             </thead>
@@ -23,7 +38,8 @@
                     <td class="px-6 py-4">{{$room->size}} seats</td>
                     <td class="px-6 py-4">{{$room->cinema->name}}</td>
                     <td class="px-6 py-4 text-right">
-                        <a href="{{route('room.edit', $room->id)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
+                        <a href="{{route('room.edit', $room->id)}}"
+                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{__('Edit')}}</a>
                         <a class="delete" href="{{route('room.destroy', $room->id)}}">{{__("Delete")}}</a></td>
                 </tr>
             @endforeach

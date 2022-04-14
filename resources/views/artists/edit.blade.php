@@ -1,6 +1,9 @@
 <x-app>
     <x-slot name="title">
-        Test
+        Edit Artist
+    </x-slot>
+    <x-slot name="link">
+
     </x-slot>
     <form method="POST" action="{{route('artist.update', $artist->id)}}" enctype="multipart/form-data">
         {{ csrf_field() }}

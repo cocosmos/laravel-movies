@@ -22,6 +22,9 @@ class MovieController extends Controller
         $this->middleware('ajax')->only('destroy');
         $this->middleware('auth')->only('create');
         $this->middleware('auth')->only('edit');
+        $this->middleware('auth')->only('attach');
+        $this->middleware('auth')->only('detach');
+
 
     }
 
@@ -32,16 +35,7 @@ class MovieController extends Controller
      */
     public function index(): View|Factory|Application
     {
-
-//        $actors = Movie::all()->first()->actors()->get();
-//        dd($actors);
-        /// $movie = Movie::with(["actors"])->first();
-        //  $actor = $movie->actors->first();
-
-//        $team = $user->teams->first();
-//        $teamRole = $team->pivot->teamRole;
-        //  dd($actor);
-
+        
         return view('movies.index', ['movies' => Movie::orderBy('title', 'ASC')->get(), "countries" => Country::all()]);
     }
 

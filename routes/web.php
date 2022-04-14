@@ -20,37 +20,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get("/", [CinemaController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('dashboard', function () {
+    return view('dashboard' . "UserController@profile");
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
 
 Route::get("profile", "UserController@profile")->middleware("auth");
 
+
 Route::prefix('movie')->group(function () {
+    //Route::get("/", ['as' => 'movie', 'uses' => 'MovieController@movie']);
     Route::get('{movie}/actors', [MovieController::class, 'actors'])->name('movie.actors');
     Route::post('{movie}/actors', [MovieController::class, 'attach'])->name('movie.attach');
     Route::get('{movie}/actors/{actor}', [MovieController::class, 'detach'])->name('movie.detach');
 });
-Route::resource('movie', 'App\Http\Controllers\MovieController');
 
 
 Route::prefix('artist')->group(function () {
     Route::get('{artist}/filmography', [ArtistController::class, 'hasPlayed'])->name('artist.filmography');
-//    Route::get('{artist}/directed', [ArtistController::class, 'hasDirected'])->name('artist.filmography');
-
-
+    //    Route::get('{artist}/directed', [ArtistController::class, 'hasDirected'])->name('artist.filmography');
 });
-Route::resource('artist', 'App\Http\Controllers\ArtistController');
 
-//Route::resource("artist", ArtistController::class);
+Route::resource("artist", ArtistController::class);
 Route::resource("country", CountryController::class);
-//Route::resource("movie", MovieController::class);
+Route::resource("movie", MovieController::class);
 Route::resource("cinema", CinemaController::class);
 Route::resource("room", RoomController::class);
 Route::resource("session", SessionController::class);

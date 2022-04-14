@@ -25,6 +25,8 @@ class ArtistController extends Controller
         $this->middleware('ajax')->only('destroy');
         $this->middleware('auth')->only('create');
         $this->middleware('auth')->only('edit');
+
+
     }
 
     /**

@@ -1,6 +1,9 @@
 <x-app>
     <x-slot name="title">
-        Test
+        Edit movie
+    </x-slot>
+    <x-slot name="link">
+
     </x-slot>
     <form method="POST" action="{{route('movie.update', $movie->id)}}" enctype="multipart/form-data">
         {{ csrf_field() }}
