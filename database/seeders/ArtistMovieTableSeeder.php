@@ -33,7 +33,6 @@ class ArtistMovieTableSeeder extends Seeder
 
                     DB::table("artist_movie")->insert(['role' => $artist["character"], "movie_id" => Movie::where("title", $movie["original_title"])->first()->id, "artist_id" => Artist::where("firstname", $firstname[0])->where("name", $name[0])->first()->id]);
 
-                    // Movie::where("title", $movie["original_title"])->actors()->attach(Artist::where("firstname", $firstname[0])->where("name", $name[0]), ['role' => $artist["character"]]);
                 }
             }
         }

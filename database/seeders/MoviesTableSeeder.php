@@ -27,13 +27,10 @@ class MoviesTableSeeder extends Seeder
 
 
         $movies = json_decode(Http::get($LINK), true);
-        //var_dump($movies["results"][0]["original_title"]);
         foreach ($movies["results"] as $movie) {
 
-            //for ($i = 0; $i < 50; $i++) {
             $apiLink = "https://api.themoviedb.org/3/movie/" . $movie["id"] . "?api_key=a6e2a2fbd348b2a79b669a1ac0f1c36e&language=en-US";
             $movie = json_decode(Http::get($apiLink), true);
-            // $country = DB::table('countries')->where('name', $movie["production_countries"]["name"])->value('id');
 
             Movie::factory()
                 ->create(
