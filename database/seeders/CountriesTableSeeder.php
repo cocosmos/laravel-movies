@@ -26,7 +26,7 @@ class CountriesTableSeeder extends Seeder
                 ->create(
                     [
                         "name" => $country["name"]["common"],
-                        "user_id" => 5
+                        "user_id" => User::all()->random()->id,
 
                     ]);
         }
