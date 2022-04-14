@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             User::factory()
                 ->create([
                     "id" => random_int(3, 4),
-                    'name' => $this->faker->name(),
+                    'name' => "name",
                     'email' => $email,
                     'email_verified_at' => now(),
                     'password' => '$2y$10$2CesC9WMbHJVXnImu5HDsOyOXCLTDk9INR1CfJqTQRa7cVZuHcWue', // test12345
